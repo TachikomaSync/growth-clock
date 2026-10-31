@@ -7,26 +7,28 @@
 <style>
   :root {
     --bg: #ffffff;
-    --line: #2b2b2b;
-    --card: #f1eee8;
-    --card-low: #e9e5dd;
-    --ink: #262626;
-    --muted: #9a958c;
-    --red: #b4533f;
-    --yellow: #d9b95b;
-    --blue: #3e5c86;
+    --line: #5c6670;
+    --card: #eef1f4;
+    --card-low: #e2e7ec;
+    --ink: #2f3740;
+    --muted: #97a0aa;
+    --paper: #f5f7f9;
+    --mist-blue: #a9bccd;
+    --mist-gray: #d0d5da;
+    --slate: #6c8094;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #191919;
-      --line: #4a4a4a;
-      --card: #262626;
-      --card-low: #222222;
-      --ink: #ebe7de;
-      --muted: #8f8b83;
-      --red: #9e4a39;
-      --yellow: #b89b4e;
-      --blue: #3a5578;
+      --line: #3d444b;
+      --card: #262a2e;
+      --card-low: #212428;
+      --ink: #e3e7ea;
+      --muted: #7f8891;
+      --paper: #1e2124;
+      --mist-blue: #4c5d6d;
+      --mist-gray: #363b40;
+      --slate: #7d90a3;
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -62,14 +64,15 @@
     display: flex; flex-direction: column; gap: calc(var(--h) * 0.2);
   }
   .colon i { display: block; width: calc(var(--h) * 0.06); height: calc(var(--h) * 0.06); background: var(--ink); }
-  .colon i:last-child { background: var(--red); }
+  .colon i:last-child { background: var(--slate); }
   .secs .card { --ch: calc(var(--h) * 0.38); }
-  .secs .half span { color: var(--red); }
+  .secs .half span { color: var(--slate); }
 
   /* 日期：纯排版 */
   .date {
     display: flex; flex-direction: column; justify-content: center;
     padding: 0 12%;
+    background: var(--paper) !important;
   }
   .day {
     font-size: calc(var(--h) * 0.95);
@@ -87,15 +90,15 @@
   .foot { display: grid; grid-template-columns: 1fr 22% 10%; gap: 2px; background: var(--line) !important; }
   .foot > div { background: var(--bg); }
   .week {
-    background: var(--yellow) !important;
+    background: var(--mist-blue) !important;
     display: flex; align-items: center; padding-left: 12%;
     gap: 0.7em;
     font-size: calc(var(--h) * 0.14);
     letter-spacing: 0.22em;
-    color: #262626;
+    color: var(--ink);
   }
-  .blue { background: var(--blue) !important; }
-  .red { background: var(--red) !important; }
+  .blue { background: var(--mist-gray) !important; }
+  .red { background: var(--slate) !important; }
 
   /* 翻页卡：浅纸色，下半略深制造厚度 */
   .card {
