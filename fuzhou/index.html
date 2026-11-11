@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light dark">
-<meta name="build" content="20261111215952">
+<meta name="build" content="20261111220644">
 <title>明日世界 · 福州站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -293,10 +293,18 @@
   html.top .d-temp{font-size:min(1.5vw,2.8vh)}
   .u{font-family:-apple-system,"Helvetica Neue",sans-serif}
   html.top .g .day{border-radius:0}
+
+  /* 三张票根并排：?w=tickets */
+  #tickets3{display:none}
+  html.tickets3,html.tickets3 body{height:100%;overflow:hidden;background:transparent}
+  html.tickets3 .grid{display:none}
+  html.tickets3 #tickets3{display:flex;height:100vh;align-items:center;justify-content:center;gap:min(3vw,5.4vh)}
+  #tickets3 img{display:block;height:min(100vh,calc((100vw - 2*min(3vw,5.4vh))/3*16/9));width:auto;filter:drop-shadow(0 3px 8px rgba(0,0,0,.28))}
 </style>
 </head>
 <body>
 <div id="ticket"></div>
+<div id="tickets3"><img src="t-maimai.png" alt="麦麦票根"><img src="t-qiaomei.png" alt="乔妹票根"><img src="t-weiwei.png" alt="微微票根"></div>
 <div id="hotel">
   <div id="hmap"></div>
   <div class="hinfo">
@@ -356,6 +364,7 @@ const W=new URLSearchParams(location.search).get('w');
 if(W==='top'){document.documentElement.classList.add('top');}
 else if(W==='ticket'){document.documentElement.classList.add('ticket');}
 else if(W==='hotel'){document.documentElement.classList.add('hotel');}
+else if(W==='tickets'){document.documentElement.classList.add('tickets3');}
 else if(W){document.documentElement.classList.add('single');
   const el=document.querySelector(`[data-w="${W}"]`); if(el) el.classList.add('on');}
 </script>
