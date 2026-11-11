@@ -99,6 +99,21 @@
   html.single .title,html.single .cd-d{font-size:46px}
   html.single .passes{margin-top:10px;gap:6px}
   html.single .days{margin-top:10px}
+  .days{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .day,.pass-main{overflow:hidden}
+  html.single .q.on{padding:clamp(8px,4vw,14px)}
+  html.single .days{gap:clamp(2px,1.2vw,5px)}
+  html.single .d-dt{font-size:clamp(10px,3.9vw,13px)}
+  html.single .d-temp{font-size:clamp(8.5px,3.3vw,11.5px);letter-spacing:-.04em}
+  html.single .d-rain,html.single .d-wk,html.single .d-ct{font-size:clamp(8px,3vw,10px)}
+  html.single .day svg{width:clamp(18px,7vw,26px);height:clamp(18px,7vw,26px)}
+  html.single .wx-head{flex-wrap:wrap}
+  html.single .pass{min-height:0}
+  html.single .pass-main{padding:6px 8px;gap:2px}
+  html.single .iata{font-size:clamp(14px,5.6vw,19px)}
+  html.single .meta{font-size:clamp(8.5px,3.3vw,10.5px);line-height:1.35}
+  html.single .stub{width:clamp(38px,15vw,52px)}
+  html.single .stub-name{font-size:clamp(11px,4.2vw,13px)}
 </style>
 </head>
 <body>
@@ -130,7 +145,7 @@
 
   <section class="q g wide" data-w="weather">
     <div class="wx-head">
-      <div class="eyebrow">Weather · 11.13 – 11.17</div>
+      <div class="eyebrow">Weather</div>
       <div class="wx-sync" id="sync">预报</div>
     </div>
     <div class="days" id="days"></div>
