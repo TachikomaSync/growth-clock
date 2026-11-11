@@ -75,6 +75,10 @@
   .stub-name{font-size:13px;font-weight:800}
   .stub-sub{font-size:8px;font-weight:700;letter-spacing:.12em;opacity:.65}
 
+  @media (min-width:561px){
+    .grid{min-height:100vh;grid-template-rows:1fr 1fr}
+    .clock{width:min(100%,300px,calc(50vh - 90px))}
+  }
   @media (max-width:560px){
     .q{padding:12px;min-height:200px}
     .q.poster{min-height:250px}
