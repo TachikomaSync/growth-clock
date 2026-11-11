@@ -114,12 +114,50 @@
   html.single .meta{font-size:clamp(8.5px,3.3vw,10.5px);line-height:1.35}
   html.single .stub{width:clamp(38px,15vw,52px)}
   html.single .stub-name{font-size:clamp(11px,4.2vw,13px)}
+  .pimg{display:none}
+  #ticket{display:none}
+
+  /* 顶部整块：?w=top  左海报 + 右时钟/天气 */
+  html.top,html.top body{height:100%;overflow:hidden;background:transparent}
+  html.top .grid{height:100vh;min-height:0;padding:0;gap:6px;background:transparent;
+    grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
+  html.top .q{min-height:0;padding:clamp(8px,2.2vw,16px)}
+  html.top [data-w=pass]{display:none}
+  html.top .q.wide{grid-column:auto}
+  html.top .q.poster{grid-row:1 / 3;padding:0;height:100vh;aspect-ratio:2/3;max-width:58vw;background:#000;border:0}
+  html.top .pimg{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+  html.top .poster .cd{position:absolute;right:6%;bottom:14.5%;margin:0;padding:0;background:none;text-align:right;text-shadow:0 1px 8px rgba(0,0,0,.9)}
+  html.top .cd-row{justify-content:flex-end;gap:clamp(3px,.8vw,8px);margin-top:0}
+  html.top .cd-label{font-size:clamp(7.5px,1.7vw,12px);color:var(--silver)}
+  html.top .cd-d{font-size:clamp(24px,6.4vw,50px);font-weight:300}
+  html.top .cd-u{font-size:clamp(8px,1.6vw,13px);color:var(--silver)}
+  html.top .cd-t{font-size:clamp(10px,2.5vw,19px);color:#fff}
+  html.top .eyebrow{font-size:clamp(7px,1.3vw,10px);letter-spacing:.16em}
+  html.top .clock{width:min(100%,calc(50vh - 62px))}
+  html.top .now{font-size:clamp(8.5px,1.6vw,12px)} html.top .now .mono{font-size:clamp(10px,2vw,15px)}
+  html.top .wx-sync{display:none}
+  html.top .days{margin-top:clamp(5px,1.2vw,12px);gap:clamp(2px,.6vw,5px)}
+  html.top .day{padding:clamp(3px,.9vw,8px) 1px;border-radius:clamp(6px,1.4vw,10px);gap:2px}
+  html.top .d-dt{font-size:clamp(8.5px,1.9vw,13px)}
+  html.top .d-wk,html.top .d-ct,html.top .d-rain{font-size:clamp(7px,1.45vw,10px)}
+  html.top .d-cond{font-size:clamp(7.5px,1.6vw,11px)}
+  html.top .d-temp{font-size:clamp(8px,1.7vw,11.5px);line-height:1.15}
+  html.top .d-temp b{display:block} html.top .d-temp .sl{display:none}
+  html.top .day svg{width:clamp(14px,3.4vw,26px);height:clamp(14px,3.4vw,26px)}
+
+  /* 票根：?w=ticket&p=0|1|2 */
+  html.ticket,html.ticket body{height:100%;overflow:hidden;background:transparent}
+  html.ticket .grid{display:none}
+  html.ticket #ticket{display:flex;height:100vh;align-items:center;justify-content:center}
+  html.ticket #ticket svg{width:min(100vw,56.25vh);height:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
 </style>
 </head>
 <body>
+<div id="ticket"></div>
 <div class="grid">
 
   <section class="q k poster" data-w="poster">
+    <img class="pimg" src="poster.jpg" alt="汪苏泷 明日世界 福州站海报">
     <div class="cd">
       <div class="cd-label" id="cd-label">距 11.14 周六 19:00 开演</div>
       <div class="cd-row">
@@ -159,7 +197,9 @@
 </div>
 <script>
 const W=new URLSearchParams(location.search).get('w');
-if(W){document.documentElement.classList.add('single');
+if(W==='top'){document.documentElement.classList.add('top');}
+else if(W==='ticket'){document.documentElement.classList.add('ticket');}
+else if(W){document.documentElement.classList.add('single');
   const el=document.querySelector(`[data-w="${W}"]`); if(el) el.classList.add('on');}
 </script>
 <script>
@@ -179,6 +219,18 @@ const PLAN = [
   { date:'2026-11-17', wk:'周二', city:'长沙' }
 ];
 const CITIES = { '福州':[26.07,119.30], '长沙':[28.23,112.94] };
+// 票根数据：景色 + 往返航班（公开页面，不放座位和实名）
+const TICKETS = [
+  { name:'麦麦', art:'lane', title:'三坊七巷', en:'SANFANG QIXIANG', cap:'白墙黛瓦，巷子里慢慢走。', capEn:'White walls, dark tiles, slow lanes.',
+    out:{date:'11.14 SAT', no:'MF8830', dep:'10:15', depAp:'长沙黄花 T2', arr:'11:50', arrAp:'福州长乐 T2'},
+    back:{date:'11.16 MON', no:'HU6176', dep:'20:00', depAp:'福州长乐 T1', arr:'21:45', arrAp:'长沙黄花 T2'} },
+  { name:'乔妹', art:'pagoda', title:'于山白塔', en:'WHITE PAGODA · YUSHAN', cap:'塔影榕荫，榕城的旧天际线。', capEn:'The old skyline of Banyan City.',
+    out:{date:'11.14 SAT', no:'UQ3585', dep:'08:20', depAp:'郑州新郑 T2', arr:'10:25', arrAp:'福州长乐 T1'},
+    back:{date:'—', no:'CZ6918', dep:'17:30', depAp:'福州长乐 T1', arr:'19:50', arrAp:'郑州新郑 T2'} },
+  { name:'微微', art:'banyan', title:'闽江榕荫', en:'MIN RIVER & BANYAN', cap:'江风过处，满城榕树。', capEn:'River wind through a city of banyans.',
+    out:{date:'11.14 SAT', no:'HO1115', dep:'07:50', depAp:'上海浦东 T2', arr:'09:35', arrAp:'福州长乐'},
+    back:{date:'11.16 MON', no:'MU5506', dep:'20:00', depAp:'福州长乐 T1', arr:'21:35', arrAp:'上海浦东 T1'} }
+];
 /* ============================ */
 
 const TZ='Asia/Shanghai', pad=n=>String(n).padStart(2,'0'), $=id=>document.getElementById(id);
@@ -256,7 +308,7 @@ function renderWx(map){
       <div><div class="d-wk">${p.wk}</div><div class="d-dt mono">${p.date.slice(5).replace('-','.')}</div><div class="d-ct">${p.show?'演出日':p.city}</div></div>
       <svg viewBox="0 0 24 24">${ICONS[ic]}</svg>
       <div><div class="d-cond">${txt}</div>
-      <div class="d-temp mono">${i?`<b>${Math.round(i.max)}°</b>/${Math.round(i.min)}°`:'--'}</div>
+      <div class="d-temp mono">${i?`<b>${Math.round(i.max)}°</b><span class="sl">/</span>${Math.round(i.min)}°`:'--'}</div>
       <div class="d-rain mono">雨 ${i&&i.rain!=null?i.rain+'%':'--'}</div></div>
     </div>`;}).join('');
 }
@@ -275,6 +327,96 @@ async function loadWx(){
   }catch(e){ $('sync').textContent='天气暂时取不到'; }
 }
 renderWx({}); loadWx(); setInterval(loadWx,30*60*1000);
+// ===== 单色复古票根（按 Monochrome Retro Ticket 版式：9:16、米白纸、单色油墨、齿孔、上图下文）=====
+const INK='#2f4a45', PAPER='#efe6d2';
+const ART={
+  lane:`
+    <circle cx="262" cy="92" r="24" fill="url(#h)"/>
+    <path d="M44 64h58M60 73h70M196 150h46M210 158h60" stroke="${INK}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M138 254 L183 224 L228 254 V302 H138Z" fill="${INK}"/>
+    <path d="M183 302 L150 376M183 302 V376M183 302 L216 376M168 330h30M160 352h46" stroke="${INK}" stroke-width="1.2" fill="none" stroke-dasharray="5 4"/>
+    <path d="M336 376 V214 C318 176 268 172 240 232 L226 218 L228 248 V376Z" fill="url(#h)" stroke="${INK}" stroke-width="2"/>
+    <path d="M336 214 C318 176 268 172 240 232 L226 218" stroke="${INK}" stroke-width="7" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M24 376 V196 C52 132 118 128 148 214 L166 194 L164 228 V376Z" fill="${PAPER}" stroke="${INK}" stroke-width="2"/>
+    <path d="M24 196 C52 132 118 128 148 214 L166 194" stroke="${INK}" stroke-width="9" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M24 212 C54 152 114 148 144 228" stroke="${INK}" stroke-width="1.2" fill="none"/>
+    <path d="M60 376 V304 a22 22 0 0 1 44 0 V376Z" fill="${INK}"/>
+    <path d="M128 262 v14" stroke="${INK}" stroke-width="1.5"/><ellipse cx="128" cy="286" rx="7" ry="9" fill="${INK}"/>
+    <path d="M262 376 V316 h34 V376Z" fill="${INK}"/>`,
+  pagoda:(()=>{
+    let g=`<circle cx="84" cy="98" r="20" fill="url(#h)"/>
+      <path d="M232 76h56M246 85h64M40 168h44M52 176h52" stroke="${INK}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M252 122 q6 -6 12 0 q6 -6 12 0M284 140 q5 -5 10 0 q5 -5 10 0" stroke="${INK}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+    let y=300; const cx=180;
+    for(let i=0;i<7;i++){
+      const w=86-8*i, h=27-1.6*i, l=cx-w/2, r=cx+w/2, top=y-h;
+      g+=`<rect x="${l}" y="${top}" width="${w}" height="${h}" fill="${PAPER}" stroke="${INK}" stroke-width="1.6"/>
+          <path d="M${cx-3} ${y} v-${h*0.55} a3 3 0 0 1 6 0 v${h*0.55}Z" fill="${INK}"/>
+          <path d="M${l-11} ${top-4} Q${l-4} ${top+1} ${l} ${top} H${r} Q${r+4} ${top+1} ${r+11} ${top-4} L${r+3} ${top-8} H${l-3}Z" fill="${INK}"/>`;
+      y=top-8;
+    }
+    g+=`<path d="M${cx} ${y} v-34" stroke="${INK}" stroke-width="2.4"/><circle cx="${cx}" cy="${y-8}" r="4" fill="${INK}"/><circle cx="${cx}" cy="${y-18}" r="3" fill="${INK}"/><circle cx="${cx}" cy="${y-26}" r="2" fill="${INK}"/>`;
+    g+=`<g fill="url(#h)" stroke="${INK}" stroke-width="1.5"><circle cx="66" cy="300" r="28"/><circle cx="108" cy="292" r="20"/><circle cx="286" cy="288" r="26"/><circle cx="316" cy="300" r="18"/></g>
+      <path d="M24 376 V320 C70 298 120 308 170 296 C230 282 290 304 336 292 V376Z" fill="${INK}"/>`;
+    return g;})(),
+  banyan:`
+    <circle cx="276" cy="108" r="19" fill="${INK}"/>
+    <path d="M214 150h44M226 158h70" stroke="${INK}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M24 252 C80 216 120 234 170 206 C215 184 262 222 336 198 V264 H24Z" fill="url(#h)"/>
+    <path d="M24 264H336" stroke="${INK}" stroke-width="1.6"/>
+    <path d="M150 284h170M190 302h130M210 322h110M236 344h90M200 362h126" stroke="${INK}" stroke-width="1.5" fill="none" stroke-dasharray="20 9" stroke-linecap="round"/>
+    <path d="M236 318 h46 l-9 11 h-28Z" fill="${INK}"/><path d="M258 318 v-22 l14 16Z" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M66 190 V296M80 196 V292M162 190 V300M176 186 V308M190 178 V312" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M88 304 C100 252 96 212 104 176 H138 C142 216 138 258 152 310Z" fill="${INK}"/>
+    <path d="M24 376 V298 C70 288 132 296 196 320 C150 342 96 362 62 376Z" fill="${INK}"/>
+    <g fill="${INK}"><ellipse cx="120" cy="140" rx="88" ry="54"/><ellipse cx="62" cy="164" rx="42" ry="32"/><ellipse cx="184" cy="160" rx="48" ry="34"/><ellipse cx="132" cy="100" rx="56" ry="34"/></g>
+    <path d="M70 136 q22 -18 46 -6M132 116 q22 -12 44 4M98 172 q26 -10 52 2M160 150 q18 -8 36 4" stroke="${PAPER}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`
+};
+function ticketSVG(t){
+  const SERIF=`'Songti SC','STSong','Noto Serif SC','Source Han Serif SC',serif`, SANS=`-apple-system,'PingFang SC','Helvetica Neue',sans-serif`, MONO=`ui-monospace,'SF Mono',Menlo,monospace`;
+  let holes='';
+  for(let x=10;x<360;x+=20) holes+=`<circle cx="${x}" cy="0" r="5.5"/><circle cx="${x}" cy="640" r="5.5"/>`;
+  for(let y=10;y<640;y+=20) holes+=`<circle cx="0" cy="${y}" r="5.5"/><circle cx="360" cy="${y}" r="5.5"/>`;
+  const dot=y=>`<path d="M28 ${y}H332" stroke="${INK}" stroke-width="1.4" stroke-dasharray="0 5" stroke-linecap="round"/>`;
+  const leg=(y,label,f)=>`
+    <text x="28" y="${y}" font-family="${SANS}" font-size="7.5" font-weight="700" letter-spacing="1.2">${label}</text>
+    <text x="332" y="${y}" text-anchor="end" font-family="${MONO}" font-size="9" font-weight="700">${f.date} · ${f.no}</text>
+    <text x="28" y="${y+24}" font-family="${MONO}" font-size="22" font-weight="700">${f.dep}</text>
+    <text x="332" y="${y+24}" text-anchor="end" font-family="${MONO}" font-size="22" font-weight="700">${f.arr}</text>
+    <path d="M104 ${y+17}H250" stroke="${INK}" stroke-width="1.3" stroke-dasharray="4 4"/><path d="M250 ${y+12.5} L260 ${y+17} L250 ${y+21.5}Z" fill="${INK}"/>
+    <text x="28" y="${y+37}" font-family="${SANS}" font-size="9" font-weight="600">${f.depAp}</text>
+    <text x="332" y="${y+37}" text-anchor="end" font-family="${SANS}" font-size="9" font-weight="600">${f.arrAp}</text>`;
+  return `<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${t.name} 的福州航班票根">
+  <defs>
+    <mask id="perf"><rect width="360" height="640" fill="#fff"/><g fill="#000">${holes}</g></mask>
+    <pattern id="h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V5" stroke="${INK}" stroke-width="2"/></pattern>
+    <clipPath id="art"><rect x="24" y="24" width="312" height="352"/></clipPath>
+  </defs>
+  <rect width="360" height="640" fill="${PAPER}" mask="url(#perf)"/>
+  <rect x="16" y="16" width="328" height="608" fill="none" stroke="${INK}" stroke-width="1.2"/>
+  <g clip-path="url(#art)">${ART[t.art]}</g>
+  <rect x="24" y="24" width="312" height="352" fill="none" stroke="${INK}" stroke-width="1.6"/>
+  ${dot(388)}
+  <g fill="${INK}">
+    <text x="28" y="424" font-family="${SERIF}" font-size="27" font-weight="900" letter-spacing="3">${t.title}</text>
+    <text x="28" y="440" font-family="${SERIF}" font-size="9" font-weight="700" letter-spacing="1.6">${t.en}</text>
+    <text x="28" y="454" font-family="${SANS}" font-size="7.5" letter-spacing="1.2">福州 · 中国　FUZHOU, CHINA</text>
+    <circle cx="304" cy="428" r="23" fill="none" stroke="${INK}" stroke-width="1.6"/><circle cx="304" cy="428" r="19" fill="none" stroke="${INK}" stroke-width=".8"/>
+    <text x="304" y="431" text-anchor="middle" font-family="${SERIF}" font-size="14" font-weight="900">${t.name}</text>
+    <text x="304" y="441" text-anchor="middle" font-family="${SANS}" font-size="5" font-weight="700" letter-spacing="1.5">PASSENGER</text>
+    ${dot(465)}
+    ${leg(481,'去程 OUTBOUND',t.out)}
+    ${dot(527)}
+    ${leg(543,'返程 RETURN',t.back)}
+    ${dot(589)}
+    <text x="28" y="603" font-family="${SERIF}" font-size="9" font-weight="700" letter-spacing="1">${t.cap}</text>
+    <text x="28" y="614" font-family="${SANS}" font-size="6.5" letter-spacing=".6">${t.capEn}</text>
+  </g></svg>`;
+}
+if(W==='ticket'){
+  const idx=Math.min(TICKETS.length-1,Math.max(0,parseInt(new URLSearchParams(location.search).get('p')||'0',10)||0));
+  $('ticket').innerHTML=ticketSVG(TICKETS[idx]);
+}
 </script>
 </body>
 </html>
