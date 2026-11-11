@@ -290,6 +290,8 @@
   .g .day.show svg{stroke:#fff}
   html.top .d-dt{font-size:min(1.45vw,2.8vh)}
   html.top .d-temp{font-size:min(1.5vw,2.8vh)}
+  .u{font-family:-apple-system,"Helvetica Neue",sans-serif}
+  html.top .g .day{border-radius:0}
 </style>
 </head>
 <body>
@@ -474,8 +476,8 @@ function renderWx(map){
       <div><div class="d-wk">${p.wk}</div><div class="d-dt mono chrome">${p.date.slice(5).replace('-','.')}</div><div class="d-ct">${p.show?'演出日':p.city}</div></div>
       <svg viewBox="0 0 24 24">${ICONS[ic]}</svg>
       <div><div class="d-cond">${txt}</div>
-      <div class="d-temp mono">${i?`<b>${Math.round(i.max)}°</b><span class="sl">/</span>${Math.round(i.min)}°`:'--'}</div>
-      <div class="d-rain mono">雨 ${i&&i.rain!=null?i.rain+'%':'--'}</div></div>
+      <div class="d-temp mono">${i?`<b>${Math.round(i.max)}<span class="u">°</span></b><span class="sl">/</span>${Math.round(i.min)}<span class="u">°</span>`:'--'}</div>
+      <div class="d-rain mono">雨 ${i&&i.rain!=null?i.rain+'<span class="u">%</span>':'--'}</div></div>
     </div>`;}).join('');
 }
 async function loadWx(){
