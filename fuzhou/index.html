@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light dark">
 <title>明日世界 · 福州站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
 <style>
   :root{
     --black:#000; --ink:#0b0d0c; --line:#232827;
@@ -12,11 +16,11 @@
     --silver:#d9d9d0; --silver-dim:#9aa19c;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--black);color:var(--silver);
+  html,body{background:transparent;color:var(--silver);
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",sans-serif;
     -webkit-font-smoothing:antialiased}
   .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:var(--black)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:transparent}
   .q{border-radius:14px;padding:16px;min-height:236px;display:flex;flex-direction:column;overflow:hidden;position:relative}
   .q.k{background:var(--ink);border:1px solid var(--line)}
   .q.g{background:var(--green);color:var(--black)}
@@ -118,8 +122,8 @@
   #ticket{display:none}
 
   /* 顶部整块：?w=top  左海报 + 右时钟/天气 */
-  html.top,html.top body{height:100%;overflow:hidden;background:#191919}
-  html.top .grid{height:100vh;min-height:0;padding:0;gap:6px;background:#191919;
+  html.top,html.top body{height:100%;overflow:hidden;background:transparent}
+  html.top .grid{height:100vh;min-height:0;padding:0;gap:6px;background:transparent;
     grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
   html.top .q{min-height:0;padding:clamp(8px,2.2vw,16px)}
   html.top [data-w=pass]{display:none}
@@ -146,13 +150,13 @@
   html.top .day svg{width:clamp(14px,3.4vw,26px);height:clamp(14px,3.4vw,26px)}
 
   /* 票根：?w=ticket&p=0|1|2 */
-  html.ticket,html.ticket body{height:100%;overflow:hidden;background:#191919}
+  html.ticket,html.ticket body{height:100%;overflow:hidden;background:transparent}
   html.ticket .grid{display:none}
   html.ticket #ticket{display:flex;height:100vh;align-items:center;justify-content:center}
   html.ticket #ticket svg{width:min(100vw,56.25vh);height:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
   /* 住宿：?w=hotel */
   #hotel{display:none}
-  html.hotel,html.hotel body{height:100%;overflow:hidden;background:#191919}
+  html.hotel,html.hotel body{height:100%;overflow:hidden;background:transparent}
   html.hotel .grid{display:none}
   html.hotel #hotel{display:flex;flex-direction:column;height:100vh;border-radius:14px;overflow:hidden;background:var(--ink);border:1px solid var(--line)}
   #hmap{flex:1;min-height:0;background:#2a302e;position:relative;z-index:0}
@@ -166,6 +170,38 @@
   .hbtns{display:flex;gap:8px;margin-top:4px}
   .hbtn{flex:1;text-align:center;text-decoration:none;font-size:13px;font-weight:700;padding:9px 6px;border-radius:9px;background:var(--green);color:#000}
   .hbtn.alt{background:transparent;color:var(--silver);border:1px solid var(--green)}
+
+  /* ===== 海报风：灰绿底 + 宽体斜字 + 镀铬银字 + 玻璃镂空字 ===== */
+  .q.g{color:#eef1ec;
+    background:radial-gradient(120% 90% at 50% 18%,#8aa39d 0%,#6f8a85 42%,#556d69 78%,#465c58 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 -30px 60px rgba(20,30,28,.25)}
+  .wide-type{font-family:"Michroma","Arial Black",sans-serif;font-style:oblique 12deg;font-synthesis:style;letter-spacing:.02em}
+  /* 镀铬：上亮下暗中间一道高光，像海报 AGE OF ROMANCE */
+  .chrome{background:linear-gradient(180deg,#ffffff 0%,#e6ebe7 30%,#8f9b97 47%,#f7f9f6 55%,#b9c2be 78%,#ffffff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;
+    filter:drop-shadow(0 0 5px rgba(255,255,255,.35)) drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+  /* 玻璃镂空：半透明字面 + 银色描边 + 柔光，像海报「明日世界」 */
+  .glass{color:rgba(255,255,255,.12);-webkit-text-stroke:1px rgba(244,247,243,.9);
+    text-shadow:0 0 10px rgba(255,255,255,.45),0 0 2px rgba(255,255,255,.6)}
+  .g .eyebrow{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400;
+    color:rgba(255,255,255,.14);-webkit-text-stroke:.7px rgba(244,247,243,.85);text-shadow:0 0 8px rgba(255,255,255,.4)}
+  /* 时钟：银色刻度和指针 */
+  .g #ticks{stroke:#f2f5f1;filter:drop-shadow(0 0 2px rgba(255,255,255,.5))}
+  .g #hh,.g #mh{stroke:#f4f6f3;filter:drop-shadow(0 0 3px rgba(255,255,255,.45)) drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+  .g #sh{stroke:rgba(255,255,255,.75)}
+  .g .hub{fill:#f4f6f3}
+  .g .now{font-weight:400;color:#eef1ec}
+  .g .now #date{opacity:.85}
+  .g .now .mono{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
+  /* 天气：玻璃格子 */
+  .g .day{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.05);color:#eef1ec}
+  .g .day.show{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.85);
+    box-shadow:0 0 12px rgba(255,255,255,.28),inset 0 0 10px rgba(255,255,255,.12)}
+  .g .day.show .d-ct{color:#fff}
+  .g .d-dt{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
+  .g .day svg{filter:drop-shadow(0 0 3px rgba(255,255,255,.4))}
+  /* 海报上的倒计时也用同一套字 */
+  .poster .cd-d,.poster .cd-t{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
 </style>
 </head>
 <body>
@@ -189,8 +225,8 @@
     <div class="cd">
       <div class="cd-label" id="cd-label">距 11.14 周六 19:00 开演</div>
       <div class="cd-row">
-        <span class="cd-d mono" id="cd-d">--</span><span class="cd-u" id="cd-u">天</span>
-        <span class="cd-t mono" id="cd-t">--:--:--</span>
+        <span class="cd-d mono glass" id="cd-d">--</span><span class="cd-u" id="cd-u">天</span>
+        <span class="cd-t mono chrome" id="cd-t">--:--:--</span>
       </div>
     </div>
   </section>
@@ -203,10 +239,10 @@
         <line id="hh" x1="100" y1="100" x2="100" y2="52" stroke="#000" stroke-width="6" stroke-linecap="round"/>
         <line id="mh" x1="100" y1="100" x2="100" y2="28" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
         <line id="sh" x1="100" y1="116" x2="100" y2="22" stroke="#d9d9d0" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="100" cy="100" r="5" fill="#000"/><circle cx="100" cy="100" r="1.8" fill="#d9d9d0"/>
+        <circle class="hub" cx="100" cy="100" r="5" fill="#000"/><circle cx="100" cy="100" r="1.8" fill="#d9d9d0"/>
       </svg>
     </div></div>
-    <div class="now"><span id="date">--</span><span class="mono" id="time">--:--:--</span></div>
+    <div class="now"><span id="date">--</span><span class="mono chrome" id="time">--:--:--</span></div>
   </section>
 
   <section class="q g wide" data-w="weather">
@@ -334,7 +370,7 @@ function renderWx(map){
   $('days').innerHTML=PLAN.map(p=>{
     const i=map[`${p.city}_${p.date}`], [txt,ic]=wmo(i&&i.code);
     return `<div class="day ${p.show?'show':''}">
-      <div><div class="d-wk">${p.wk}</div><div class="d-dt mono">${p.date.slice(5).replace('-','.')}</div><div class="d-ct">${p.show?'演出日':p.city}</div></div>
+      <div><div class="d-wk">${p.wk}</div><div class="d-dt mono chrome">${p.date.slice(5).replace('-','.')}</div><div class="d-ct">${p.show?'演出日':p.city}</div></div>
       <svg viewBox="0 0 24 24">${ICONS[ic]}</svg>
       <div><div class="d-cond">${txt}</div>
       <div class="d-temp mono">${i?`<b>${Math.round(i.max)}°</b><span class="sl">/</span>${Math.round(i.min)}°`:'--'}</div>
