@@ -33,6 +33,9 @@
   .cd-u{font-size:13px;color:var(--silver-dim)}
   .cd-t{font-size:20px;font-weight:300;color:var(--silver)}
 
+  .q.poster{background:#000 url(poster.jpg) center top/cover no-repeat;padding:0;border-color:var(--line)}
+  .poster .cd{padding:34px 16px 14px;background:linear-gradient(to top,rgba(0,0,0,.92) 35%,rgba(0,0,0,0))}
+  .poster .cd-label{color:var(--silver)}
   /* Q2 时钟 */
   .clockwrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
   .clock{width:min(100%,176px);aspect-ratio:1}
@@ -74,6 +77,8 @@
 
   @media (max-width:560px){
     .q{padding:12px;min-height:200px}
+    .q.poster{min-height:250px}
+    .poster .cd{padding:30px 12px 10px}
     .q.wide{grid-column:1 / -1}
     .title{font-size:22px} .cd-d{font-size:42px} .cd-t{font-size:15px}
     .eyebrow{font-size:8.5px;letter-spacing:.12em;white-space:normal;line-height:1.5}
@@ -84,10 +89,7 @@
 <body>
 <div class="grid">
 
-  <section class="q k">
-    <div class="eyebrow">World Tour · Age of Romance</div>
-    <div class="title">明日世界</div>
-    <div class="venue">汪苏泷 · 福州站<br>海峡奥体中心体育场</div>
+  <section class="q k poster">
     <div class="cd">
       <div class="cd-label" id="cd-label">距 11.14 周六 19:00 开演</div>
       <div class="cd-row">
