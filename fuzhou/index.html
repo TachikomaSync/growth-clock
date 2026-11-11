@@ -256,6 +256,40 @@
   .g .day.show .d-wk,.g .day.show .d-ct,.g .day.show .d-rain,.g .day.show .d-dt,.g .day.show .d-temp b{color:#000;text-shadow:none}
   .g .day.show svg{stroke:#000;filter:none}
   html.top .d-dt{font-size:min(1.6vw,3vh)}
+
+  /* ===== 黑白版：黑底 + 海报那种白银色，宽体字（覆盖上面的青绿） ===== */
+  :root{--lcd:#f3f3ef;--lcd-glow:rgba(255,255,255,.38);--lcd-dim:rgba(255,255,255,.055);--lcd-mid:#8d918e}
+  .q.g{background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px),
+      radial-gradient(130% 110% at 50% 0%,#1a1b1b 0%,#0a0a0a 55%,#000 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 0 50px rgba(0,0,0,.85)}
+  .g .eyebrow{font-family:"Michroma",sans-serif;letter-spacing:.22em;color:var(--lcd-mid)}
+  .g .eyebrow i{color:var(--lcd);opacity:.35}
+  .seg #dtime{text-shadow:0 0 8px var(--lcd-glow),0 0 22px rgba(255,255,255,.12)}
+  .sbar i{background:rgba(255,255,255,.07)} .sbar i:nth-child(5n){background:rgba(255,255,255,.16)}
+  .sbar i.on{background:#d9dbd7;box-shadow:none} .sbar i.on:nth-child(5n){background:#fff}
+  .dmeta{font-family:"Michroma",sans-serif;letter-spacing:.14em}
+  .blink{color:#fff}
+  /* 天气：去掉方框，细线分栏，宽体字 */
+  .q.g[data-w=weather] .days{gap:0}
+  .g .day{background:transparent;border:0;border-left:1px solid rgba(255,255,255,.12);border-radius:0;color:var(--lcd);padding-top:min(1vw,1.6vh)}
+  .g .day:first-child{border-left:0}
+  .g .d-wk{font-family:"Michroma",sans-serif;letter-spacing:.12em;color:var(--lcd-mid)}
+  .g .d-dt{font-family:"Michroma",sans-serif;color:#fff;text-shadow:none;letter-spacing:.04em}
+  .g .d-ct{color:var(--lcd-mid)}
+  .g .day svg{stroke:#e9eae6;stroke-width:1.3;filter:none}
+  .g .d-cond{color:var(--lcd-mid)}
+  .g .d-temp{font-family:"Michroma",sans-serif}
+  .g .d-temp b{color:#fff;text-shadow:none;font-weight:400}
+  .g .d-rain{font-family:"Michroma",sans-serif;color:#6f7370}
+  .g .day.show{background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.02));color:#fff;border-color:rgba(255,255,255,.12);
+    box-shadow:inset 0 2px 0 #fff}
+  .g .day.show .d-wk,.g .day.show .d-dt,.g .day.show .d-temp b{color:#fff}
+  .g .day.show .d-ct{color:#fff;letter-spacing:.1em}
+  .g .day.show .d-rain{color:#9a9e9b}
+  .g .day.show svg{stroke:#fff}
+  html.top .d-dt{font-size:min(1.45vw,2.8vh)}
+  html.top .d-temp{font-size:min(1.5vw,2.8vh)}
 </style>
 </head>
 <body>
