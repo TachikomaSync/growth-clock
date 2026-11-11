@@ -203,6 +203,18 @@
   .g .day.show .d-ct{color:#fff}
   .g .d-dt{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
   .g .day svg{filter:drop-shadow(0 0 3px rgba(255,255,255,.4))}
+  /* 顶部整块按高度也能缩：Notion 里嵌入高度 300–400 都放得下 */
+  html.top .q{padding:min(2.2vw,4.4vh) min(2.2vw,16px)}
+  html.top .eyebrow{font-size:min(1.3vw,2.8vh)}
+  html.top .clock{width:min(100%,calc(50vh - 58px))}
+  html.top .now{font-size:min(1.6vw,3.2vh)} html.top .now .mono{font-size:min(2vw,3.8vh)}
+  html.top .days{margin-top:min(1.2vw,1.8vh);gap:min(.6vw,1.2vh)}
+  html.top .day{padding:min(.9vw,1.2vh) 1px;gap:0;justify-content:space-evenly}
+  html.top .d-dt{font-size:min(1.9vw,3.4vh)}
+  html.top .d-wk,html.top .d-ct,html.top .d-rain{font-size:min(1.45vw,2.6vh)}
+  html.top .d-cond{font-size:min(1.6vw,2.8vh)}
+  html.top .d-temp{font-size:min(1.7vw,3vh);line-height:1.1}
+  html.top .day svg{width:min(3.4vw,5.4vh);height:min(3.4vw,5.4vh)}
   /* 海报上的倒计时也用同一套字 */
   .poster .cd-d,.poster .cd-t{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
 </style>
