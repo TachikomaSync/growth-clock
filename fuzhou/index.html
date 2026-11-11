@@ -8,7 +8,7 @@
 <title>明日世界 · 福州站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root{
     --black:#000; --ink:#0b0d0c; --line:#232827;
@@ -217,6 +217,45 @@
   html.top .day svg{width:min(3.4vw,5.4vh);height:min(3.4vw,5.4vh)}
   /* 海报上的倒计时也用同一套字 */
   .poster .cd-d,.poster .cd-t{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
+
+  /* ===== 电子数码风（覆盖上面的海报风） ===== */
+  @font-face{font-family:"DSEG7";src:url(https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Bold.woff2) format("woff2");font-display:swap}
+  :root{--lcd:#cfe8e1;--lcd-glow:rgba(120,210,188,.55);--lcd-dim:rgba(150,200,188,.10);--lcd-mid:#7f9c95}
+  .dg-show{display:none} .dclock{display:none}
+  .q.g{color:var(--lcd);font-family:"Share Tech Mono",ui-monospace,monospace;
+    background:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),
+      linear-gradient(rgba(120,200,180,.06) 1px,transparent 1px) 0 0/22px 22px,
+      linear-gradient(90deg,rgba(120,200,180,.06) 1px,transparent 1px) 0 0/22px 22px,
+      radial-gradient(120% 100% at 50% 0%,#14211e 0%,#070b0a 60%,#000 100%);
+    box-shadow:inset 0 0 0 1px rgba(150,220,200,.18),inset 0 0 40px rgba(0,0,0,.8)}
+  .q.g .dg-hide{display:none} .q.g .dg-show{display:inline}
+  .g .eyebrow{font-family:"Share Tech Mono",monospace;font-style:normal;font-weight:400;letter-spacing:.14em;
+    color:var(--lcd-mid);-webkit-text-stroke:0;text-shadow:none}
+  .g .eyebrow i{font-style:normal;color:var(--lcd);opacity:.5}
+  .q.g[data-w=clock] .clockwrap,.q.g[data-w=clock] .now{display:none}
+  .q.g .dclock{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0;gap:min(1.4vw,2.4vh)}
+  .seg{position:relative;font-family:"DSEG7",monospace;font-size:min(7.2vw,15vh);line-height:1;letter-spacing:.04em;text-align:center}
+  .seg .ghost{position:absolute;inset:0;color:var(--lcd-dim)}
+  .seg #dtime{position:relative;color:var(--lcd);text-shadow:0 0 6px var(--lcd-glow),0 0 18px rgba(120,210,188,.25)}
+  .sbar{display:grid;grid-template-columns:repeat(60,1fr);gap:2px;height:min(.9vw,1.8vh)}
+  .sbar i{background:rgba(150,220,200,.10)} .sbar i.on{background:var(--lcd);box-shadow:0 0 4px var(--lcd-glow)}
+  .sbar i:nth-child(5n){background:rgba(150,220,200,.22)} .sbar i.on:nth-child(5n){background:#fff}
+  .dmeta{display:flex;justify-content:space-between;font-size:min(1.5vw,3vh);letter-spacing:.1em;color:var(--lcd-mid)}
+  .dmeta #ddate{color:var(--lcd)}
+  .blink{color:#e05a4e;animation:bl 1s steps(1) infinite} @keyframes bl{50%{opacity:.2}}
+  /* 天气：终端格子 */
+  .g .day{background:rgba(0,0,0,.35);border:1px solid rgba(150,220,200,.22);border-radius:4px;color:var(--lcd)}
+  .g .d-wk,.g .d-ct,.g .d-rain{color:var(--lcd-mid);opacity:1}
+  .g .d-dt{font-family:"DSEG7",monospace;font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;
+    color:var(--lcd);filter:none;text-shadow:0 0 5px var(--lcd-glow);letter-spacing:.02em}
+  .g .d-cond,.g .d-temp{font-family:"Share Tech Mono",monospace}
+  .g .d-temp b{color:#fff;text-shadow:0 0 5px var(--lcd-glow)}
+  .g .day svg{stroke:var(--lcd);filter:drop-shadow(0 0 3px var(--lcd-glow))}
+  .g .day.show{background:var(--lcd);color:#000;border-color:var(--lcd);box-shadow:0 0 14px var(--lcd-glow)}
+  .g .day.show .d-wk,.g .day.show .d-ct,.g .day.show .d-rain,.g .day.show .d-dt,.g .day.show .d-temp b{color:#000;text-shadow:none}
+  .g .day.show svg{stroke:#000;filter:none}
+  html.top .d-dt{font-size:min(1.6vw,3vh)}
 </style>
 </head>
 <body>
@@ -247,7 +286,8 @@
   </section>
 
   <section class="q g" data-w="clock">
-    <div class="eyebrow">Beijing Time</div>
+    <div class="eyebrow"><span class="dg-hide">Beijing Time</span><span class="dg-show">SYS.CLOCK <i>//</i> BEIJING UTC+08</span></div>
+    <div class="dclock"><div class="seg"><span class="ghost">88:88:88</span><span id="dtime">--:--:--</span></div><div class="sbar" id="sbar"></div><div class="dmeta"><span id="ddate">----.--.--</span><span class="blink">● LIVE</span><span>FOC 26.07N 119.30E</span></div></div>
     <div class="clockwrap"><div class="clock">
       <svg viewBox="0 0 200 200">
         <g id="ticks" stroke="#000" stroke-linecap="round"></g>
@@ -262,7 +302,7 @@
 
   <section class="q g wide" data-w="weather">
     <div class="wx-head">
-      <div class="eyebrow">Weather</div>
+      <div class="eyebrow"><span class="dg-hide">Weather</span><span class="dg-show">WX.FORECAST <i>//</i> 5D · 11.13–11.17</span></div>
       <div class="wx-sync" id="sync">预报</div>
     </div>
     <div class="days" id="days"></div>
@@ -308,7 +348,7 @@ const TICKETS = [
     out:{date:'11.14 SAT', no:'UQ3585', dep:'08:20', depAp:'郑州新郑 T2', arr:'10:25', arrAp:'福州长乐 T1'},
     back:{date:'11.16 MON', no:'CZ6918', dep:'17:30', depAp:'福州长乐 T1', arr:'19:50', arrAp:'郑州新郑 T2'} },
   { name:'微微', art:'banyan', title:'闽江榕荫', en:'MIN RIVER & BANYAN', cap:'江风过处，满城榕树。', capEn:'River wind through a city of banyans.',
-    out:{date:'11.14 SAT', no:'HO1115', dep:'07:50', depAp:'上海浦东 T2', arr:'09:35', arrAp:'福州长乐'},
+    out:{date:'11.14 SAT', no:'HO1115', dep:'07:50', depAp:'上海浦东 T2', arr:'09:35', arrAp:'福州长乐 T1'},
     back:{date:'11.16 MON', no:'MU5506', dep:'20:00', depAp:'福州长乐 T1', arr:'21:35', arrAp:'上海浦东 T1'} }
 ];
 /* ============================ */
@@ -343,6 +383,18 @@ function tick(){
   }
 }
 tick(); setInterval(tick,1000);
+// 数码时钟
+(function(){
+  const sb=$('sbar'); sb.innerHTML=Array.from({length:60},()=>'<i></i>').join('');
+  const cells=sb.children, wk=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  function dt(){
+    const now=new Date(), z=new Date(now.toLocaleString('en-US',{timeZone:TZ}));
+    $('dtime').textContent=`${pad(z.getHours())}:${pad(z.getMinutes())}:${pad(z.getSeconds())}`;
+    $('ddate').textContent=`${z.getFullYear()}.${pad(z.getMonth()+1)}.${pad(z.getDate())} ${wk[z.getDay()]}`;
+    const s=z.getSeconds(); for(let i=0;i<60;i++) cells[i].className=i<=s?'on':'';
+  }
+  dt(); setInterval(dt,1000);
+})();
 
 // 登机牌
 $('passes').innerHTML=PASSES.map(p=>`
