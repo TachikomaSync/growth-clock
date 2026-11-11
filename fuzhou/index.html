@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>明日世界 · 福州站</title>
+<style>
+  :root{
+    --black:#000; --ink:#0b0d0c; --line:#232827;
+    --green:#587370; --green-hi:#6b7974; --green-lo:#415b57;
+    --silver:#d9d9d0; --silver-dim:#9aa19c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--black);color:var(--silver);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:var(--black)}
+  .q{border-radius:14px;padding:16px;min-height:236px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+  .q.k{background:var(--ink);border:1px solid var(--line)}
+  .q.g{background:var(--green);color:var(--black)}
+  .eyebrow{font-size:10px;font-weight:800;font-style:italic;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+  .k .eyebrow{color:var(--green-hi)} .g .eyebrow{color:rgba(0,0,0,.62)}
+
+  /* Q1 倒计时 */
+  .title{font-size:30px;font-weight:900;font-style:italic;letter-spacing:.1em;color:#fff;margin-top:8px;line-height:1.1}
+  .venue{font-size:12px;color:var(--silver-dim);margin-top:6px}
+  .cd{margin-top:auto}
+  .cd-label{font-size:11px;color:var(--green-hi);letter-spacing:.08em}
+  .cd-row{display:flex;align-items:baseline;gap:8px;margin-top:4px;flex-wrap:wrap}
+  .cd-d{font-size:54px;font-weight:200;line-height:1;color:#fff}
+  .cd-u{font-size:13px;color:var(--silver-dim)}
+  .cd-t{font-size:20px;font-weight:300;color:var(--silver)}
+
+  /* Q2 时钟 */
+  .clockwrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .clock{width:min(100%,176px);aspect-ratio:1}
+  .clock svg{width:100%;height:100%;display:block}
+  .now{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:600}
+  .now .mono{font-size:15px;font-weight:700}
+
+  /* Q3 天气 */
+  .wx-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .wx-sync{font-size:10px;color:rgba(0,0,0,.55);white-space:nowrap}
+  .days{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:12px;flex:1}
+  .day{border:1px solid rgba(0,0,0,.28);border-radius:10px;padding:8px 2px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:4px}
+  .day.show{background:var(--black);color:var(--silver);border-color:var(--black)}
+  .d-wk{font-size:10px;opacity:.7} .d-dt{font-size:13px;font-weight:700} .d-ct{font-size:10px;opacity:.7}
+  .day svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .d-cond{font-size:11px;font-weight:600}
+  .d-temp{font-size:11.5px} .d-temp b{font-weight:800}
+  .d-rain{font-size:10px;opacity:.75}
+  .day.show .d-ct{color:var(--green-hi);opacity:1;font-weight:700}
+
+  /* Q4 登机牌 */
+  .passes{display:flex;flex-direction:column;gap:7px;margin-top:12px;flex:1;justify-content:space-between}
+  .pass{display:flex;border-radius:10px;overflow:hidden;background:var(--black);border:1px solid var(--line);flex:1;min-height:54px}
+  .pass-main{flex:1;padding:8px 10px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0}
+  .route{display:flex;align-items:center;gap:8px}
+  .iata{font-size:19px;font-weight:800;letter-spacing:.04em;color:#fff;line-height:1}
+  .city{font-size:10px;color:var(--silver-dim);margin-top:2px}
+  .fly{flex:1;height:1px;border-top:1px dashed var(--green);position:relative;min-width:14px}
+  .fly::after{content:"✈";position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);
+    font-size:11px;color:var(--green-hi);background:var(--black);padding:0 4px}
+  .meta{font-size:10.5px;color:var(--silver-dim);line-height:1.5}
+  .meta b{color:var(--silver);font-weight:600}
+  .meta .tbd{color:var(--green-hi)}
+  .stub{width:52px;background:var(--green);color:var(--black);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:2px;border-left:2px dashed var(--black);flex-shrink:0}
+  .stub-name{font-size:13px;font-weight:800}
+  .stub-sub{font-size:8px;font-weight:700;letter-spacing:.12em;opacity:.65}
+
+  @media (max-width:560px){
+    .q{padding:12px;min-height:200px}
+    .q.wide{grid-column:1 / -1}
+    .title{font-size:22px} .cd-d{font-size:42px} .cd-t{font-size:15px}
+    .eyebrow{font-size:8.5px;letter-spacing:.12em;white-space:normal;line-height:1.5}
+    .venue{font-size:11px}
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <section class="q k">
+    <div class="eyebrow">World Tour · Age of Romance</div>
+    <div class="title">明日世界</div>
+    <div class="venue">汪苏泷 · 福州站<br>海峡奥体中心体育场</div>
+    <div class="cd">
+      <div class="cd-label" id="cd-label">距 11.14 周六 19:00 开演</div>
+      <div class="cd-row">
+        <span class="cd-d mono" id="cd-d">--</span><span class="cd-u" id="cd-u">天</span>
+        <span class="cd-t mono" id="cd-t">--:--:--</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="q g">
+    <div class="eyebrow">Beijing Time</div>
+    <div class="clockwrap"><div class="clock">
+      <svg viewBox="0 0 200 200">
+        <g id="ticks" stroke="#000" stroke-linecap="round"></g>
+        <line id="hh" x1="100" y1="100" x2="100" y2="52" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+        <line id="mh" x1="100" y1="100" x2="100" y2="28" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+        <line id="sh" x1="100" y1="116" x2="100" y2="22" stroke="#d9d9d0" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="100" cy="100" r="5" fill="#000"/><circle cx="100" cy="100" r="1.8" fill="#d9d9d0"/>
+      </svg>
+    </div></div>
+    <div class="now"><span id="date">--</span><span class="mono" id="time">--:--:--</span></div>
+  </section>
+
+  <section class="q g wide">
+    <div class="wx-head">
+      <div class="eyebrow">Weather · 11.13 – 11.17</div>
+      <div class="wx-sync" id="sync">预报</div>
+    </div>
+    <div class="days" id="days"></div>
+  </section>
+
+  <section class="q k wide">
+    <div class="eyebrow">Boarding Pass · To Fuzhou</div>
+    <div class="passes" id="passes"></div>
+  </section>
+
+</div>
+<script>
+/* ===== 要改的数据都在这里 ===== */
+const SHOW_TIME = new Date('2026-11-14T19:00:00+08:00');
+const SHOW_END  = new Date('2026-11-14T22:00:00+08:00');
+const PASSES = [
+  { name:'麦麦', from:'CSX', fromCity:'长沙', to:'FOC', toCity:'福州', flight:'MF8830', date:'11.14', time:'10:15 – 11:50', back:'返 11.16 HU6176 20:00' },
+  { name:'乔妹', from:'CGO', fromCity:'郑州', to:'FOC', toCity:'福州', flight:'', date:'', time:'', back:'' },
+  { name:'微微', from:'SHA', fromCity:'上海', to:'FOC', toCity:'福州', flight:'', date:'', time:'', back:'' }
+];
+const PLAN = [
+  { date:'2026-11-13', wk:'周五', city:'长沙' },
+  { date:'2026-11-14', wk:'周六', city:'福州', show:true },
+  { date:'2026-11-15', wk:'周日', city:'福州' },
+  { date:'2026-11-16', wk:'周一', city:'福州' },
+  { date:'2026-11-17', wk:'周二', city:'长沙' }
+];
+const CITIES = { '福州':[26.07,119.30], '长沙':[28.23,112.94] };
+/* ============================ */
+
+const TZ='Asia/Shanghai', pad=n=>String(n).padStart(2,'0'), $=id=>document.getElementById(id);
+
+// 表盘刻度
+$('ticks').innerHTML = Array.from({length:60},(_,i)=>{
+  const big=i%5===0, a=i*6*Math.PI/180, r1=big?80:86, r2=92;
+  return `<line x1="${100+r1*Math.sin(a)}" y1="${100-r1*Math.cos(a)}" x2="${100+r2*Math.sin(a)}" y2="${100-r2*Math.cos(a)}" stroke-width="${big?3:1}" opacity="${big?1:.45}"/>`;
+}).join('');
+
+function tick(){
+  const now=new Date();
+  const [h,m,s]=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now).split(':').map(Number);
+  $('hh').setAttribute('transform',`rotate(${(h%12)*30+m*.5} 100 100)`);
+  $('mh').setAttribute('transform',`rotate(${m*6+s*.1} 100 100)`);
+  $('sh').setAttribute('transform',`rotate(${s*6} 100 100)`);
+  $('time').textContent=`${pad(h)}:${pad(m)}:${pad(s)}`;
+  $('date').textContent=new Intl.DateTimeFormat('zh-CN',{timeZone:TZ,month:'numeric',day:'numeric',weekday:'short'}).format(now);
+
+  const diff=SHOW_TIME-now;
+  if(diff>0){
+    const t=Math.floor(diff/1000);
+    $('cd-d').textContent=Math.floor(t/86400);
+    $('cd-t').textContent=`${pad(Math.floor(t%86400/3600))}:${pad(Math.floor(t%3600/60))}:${pad(t%60)}`;
+  }else{
+    $('cd-u').textContent=''; $('cd-t').textContent='';
+    if(now<SHOW_END){ $('cd-label').textContent='11.14 周六 19:00'; $('cd-d').textContent='演出中'; }
+    else{ $('cd-label').textContent='11.14 福州站'; $('cd-d').textContent='已看完'; }
+    $('cd-d').style.fontSize='34px'; $('cd-d').style.fontWeight='800';
+  }
+}
+tick(); setInterval(tick,1000);
+
+// 登机牌
+$('passes').innerHTML=PASSES.map(p=>`
+  <div class="pass">
+    <div class="pass-main">
+      <div class="route">
+        <div><div class="iata">${p.from}</div><div class="city">${p.fromCity}</div></div>
+        <div class="fly"></div>
+        <div style="text-align:right"><div class="iata">${p.to}</div><div class="city">${p.toCity}</div></div>
+      </div>
+      <div class="meta mono">${p.flight
+        ? `<b>${p.flight}</b> · ${p.date} · <b>${p.time}</b>` + (p.back?`<br>${p.back}`:'')
+        : `<span class="tbd">航班待填</span>`}</div>
+    </div>
+    <div class="stub"><div class="stub-name">${p.name}</div><div class="stub-sub">PAX</div></div>
+  </div>`).join('');
+
+// 天气
+const ICONS={
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>',
+  part:'<path d="M12 2v2M4.93 4.93l1.41 1.41M2 12h2"/><circle cx="10" cy="10" r="3"/><path d="M8 18h10a4 4 0 0 0 0-8 6 6 0 0 0-11.4 1.6A3.5 3.5 0 0 0 8 18z"/>',
+  cloud:'<path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4 1.6A3.3 3.3 0 0 0 7 18z"/>',
+  fog:'<path d="M7 13h10a3.7 3.7 0 0 0 .4-7.4A5.6 5.6 0 0 0 6.8 7.1 3.1 3.1 0 0 0 7 13z"/><path d="M5 17h14M7 21h10"/>',
+  rain:'<path d="M7 15h10a3.7 3.7 0 0 0 .4-7.4 5.6 5.6 0 0 0-10.6 1.5A3.1 3.1 0 0 0 7 15z"/><path d="M8.5 18l-1 3M12.5 18l-1 3M16.5 18l-1 3"/>',
+  storm:'<path d="M7 14h10a3.5 3.5 0 0 0 .4-7 5.4 5.4 0 0 0-10.2 1.4A3 3 0 0 0 7 14z"/><path d="M13 14l-2.5 4h3l-2 4"/>'
+};
+function wmo(c){
+  if(c==null) return ['--','cloud'];
+  if(c<=1) return ['晴','sun'];
+  if(c===2) return ['多云','part'];
+  if(c===3) return ['阴','cloud'];
+  if(c===45||c===48) return ['雾','fog'];
+  if(c>=51&&c<=57) return ['毛毛雨','rain'];
+  if(c>=61&&c<=67) return ['雨','rain'];
+  if(c>=80&&c<=82) return ['阵雨','rain'];
+  if(c>=95) return ['雷雨','storm'];
+  return ['阴','cloud'];
+}
+function renderWx(map){
+  $('days').innerHTML=PLAN.map(p=>{
+    const i=map[`${p.city}_${p.date}`], [txt,ic]=wmo(i&&i.code);
+    return `<div class="day ${p.show?'show':''}">
+      <div><div class="d-wk">${p.wk}</div><div class="d-dt mono">${p.date.slice(5).replace('-','.')}</div><div class="d-ct">${p.show?'演出日':p.city}</div></div>
+      <svg viewBox="0 0 24 24">${ICONS[ic]}</svg>
+      <div><div class="d-cond">${txt}</div>
+      <div class="d-temp mono">${i?`<b>${Math.round(i.max)}°</b>/${Math.round(i.min)}°`:'--'}</div>
+      <div class="d-rain mono">雨 ${i&&i.rain!=null?i.rain+'%':'--'}</div></div>
+    </div>`;}).join('');
+}
+async function loadWx(){
+  const map={};
+  try{
+    await Promise.all(Object.entries(CITIES).map(async([name,[lat,lon]])=>{
+      const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FShanghai&start_date=${PLAN[0].date}&end_date=${PLAN[PLAN.length-1].date}`);
+      if(!r.ok) throw new Error(r.status);
+      const j=await r.json();
+      j.daily.time.forEach((t,i)=>map[`${name}_${t}`]={code:j.daily.weather_code[i],max:j.daily.temperature_2m_max[i],min:j.daily.temperature_2m_min[i],rain:j.daily.precipitation_probability_max[i]});
+    }));
+    renderWx(map);
+    const n=new Date();
+    $('sync').textContent=`Open-Meteo · ${new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit',hour12:false}).format(n)} 更新`;
+  }catch(e){ $('sync').textContent='天气暂时取不到'; }
+}
+renderWx({}); loadWx(); setInterval(loadWx,30*60*1000);
+</script>
+</body>
+</html>
