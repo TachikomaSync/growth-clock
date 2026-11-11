@@ -88,12 +88,23 @@
     .eyebrow{font-size:8.5px;letter-spacing:.12em;white-space:normal;line-height:1.5}
     .venue{font-size:11px}
   }
+
+  /* 单组件模式：?w=poster|clock|weather|pass */
+  html.single,html.single body{height:100%;overflow:hidden}
+  html.single .grid{display:block;padding:0;min-height:0;height:100vh}
+  html.single .q{display:none}
+  html.single .q.on{display:flex;height:100vh;min-height:0;padding:14px}
+  html.single .q.poster.on{padding:0;background-position:center 18%}
+  html.single .clock{width:min(100%,calc(100vh - 86px))}
+  html.single .title,html.single .cd-d{font-size:46px}
+  html.single .passes{margin-top:10px;gap:6px}
+  html.single .days{margin-top:10px}
 </style>
 </head>
 <body>
 <div class="grid">
 
-  <section class="q k poster">
+  <section class="q k poster" data-w="poster">
     <div class="cd">
       <div class="cd-label" id="cd-label">距 11.14 周六 19:00 开演</div>
       <div class="cd-row">
@@ -103,7 +114,7 @@
     </div>
   </section>
 
-  <section class="q g">
+  <section class="q g" data-w="clock">
     <div class="eyebrow">Beijing Time</div>
     <div class="clockwrap"><div class="clock">
       <svg viewBox="0 0 200 200">
@@ -117,7 +128,7 @@
     <div class="now"><span id="date">--</span><span class="mono" id="time">--:--:--</span></div>
   </section>
 
-  <section class="q g wide">
+  <section class="q g wide" data-w="weather">
     <div class="wx-head">
       <div class="eyebrow">Weather · 11.13 – 11.17</div>
       <div class="wx-sync" id="sync">预报</div>
@@ -125,12 +136,17 @@
     <div class="days" id="days"></div>
   </section>
 
-  <section class="q k wide">
+  <section class="q k wide" data-w="pass">
     <div class="eyebrow">Boarding Pass · To Fuzhou</div>
     <div class="passes" id="passes"></div>
   </section>
 
 </div>
+<script>
+const W=new URLSearchParams(location.search).get('w');
+if(W){document.documentElement.classList.add('single');
+  const el=document.querySelector(`[data-w="${W}"]`); if(el) el.classList.add('on');}
+</script>
 <script>
 /* ===== 要改的数据都在这里 ===== */
 const SHOW_TIME = new Date('2026-11-14T19:00:00+08:00');
