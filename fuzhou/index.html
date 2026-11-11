@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light dark">
+<meta name="build" content="20261111215952">
 <title>明日世界 · 福州站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -301,7 +302,7 @@
   <div class="hinfo">
     <div class="hname">仓山希尔顿惠庭酒店</div>
     <div class="haddr">福州市仓山区上三路 216 号山亚大厦 B 座<br>距地铁 1 号线三叉街站约 700 m</div>
-    <div class="hmeta mono"><b>已订</b> · 11.14 入住 – 11.16 退房 · 两晚 · 人均 ¥246</div>
+    <div class="hmeta mono"><b>已订</b> · 11.14 入住 – 11.16 退房 · 两晚</div>
     <div class="hbtns">
       <a class="hbtn" target="_blank" rel="noopener" href="https://uri.amap.com/search?keyword=%E7%A6%8F%E5%B7%9E%E4%BB%93%E5%B1%B1%E5%B8%8C%E5%B0%94%E9%A1%BF%E6%83%A0%E5%BA%AD%E9%85%92%E5%BA%97&city=%E7%A6%8F%E5%B7%9E&callnative=1">高德地图</a>
       <a class="hbtn alt" target="_blank" rel="noopener" href="https://maps.apple.com/?q=%E7%A6%8F%E5%B7%9E%E4%BB%93%E5%B1%B1%E5%B8%8C%E5%B0%94%E9%A1%BF%E6%83%A0%E5%BA%AD%E9%85%92%E5%BA%97">苹果地图</a>
@@ -598,6 +599,16 @@ if(W==='hotel'){
   };
   document.body.appendChild(sc);
 }
+</script>
+<script>
+/* 自动更新：Pages 缓存 10 分钟，打开时绕过缓存比对版本号，有新版就立刻换成新版 */
+(function(){
+  const mine=document.querySelector('meta[name=build]').content;
+  fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(t=>{
+    const m=t.match(/name="build" content="(\d+)"/);
+    if(m&&m[1]!==mine){const u=new URL(location.href);u.searchParams.set('_b',m[1]);location.replace(u);}
+  }).catch(()=>{});
+})();
 </script>
 </body>
 </html>
