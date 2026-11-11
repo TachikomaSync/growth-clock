@@ -187,16 +187,19 @@
     color:rgba(255,255,255,.14);-webkit-text-stroke:.7px rgba(244,247,243,.85);text-shadow:0 0 8px rgba(255,255,255,.4)}
   /* 时钟：银色刻度和指针 */
   .g #ticks{stroke:#f2f5f1;filter:drop-shadow(0 0 2px rgba(255,255,255,.5))}
-  .g #hh,.g #mh{stroke:#f4f6f3;filter:drop-shadow(0 0 3px rgba(255,255,255,.45)) drop-shadow(0 1px 1px rgba(0,0,0,.35))}
-  .g #sh{stroke:rgba(255,255,255,.75)}
-  .g .hub{fill:#f4f6f3}
+  .g #hh,.g #mh{stroke:#050606;filter:drop-shadow(0 0 1.5px rgba(255,255,255,.55))}
+  .g #sh{stroke:rgba(255,255,255,.85)}
+  .g .hub{fill:#050606}
+  /* 黑色元素：像海报下半截的黑外套，卡片底部沉到黑 */
+  .q.g{background:linear-gradient(180deg,rgba(0,0,0,0) 52%,rgba(0,0,0,.55) 80%,rgba(0,0,0,.92) 100%),
+    radial-gradient(120% 90% at 50% 18%,#8aa39d 0%,#6f8a85 42%,#556d69 78%,#465c58 100%)}
   .g .now{font-weight:400;color:#eef1ec}
   .g .now #date{opacity:.85}
   .g .now .mono{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
   /* 天气：玻璃格子 */
   .g .day{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.05);color:#eef1ec}
-  .g .day.show{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.85);
-    box-shadow:0 0 12px rgba(255,255,255,.28),inset 0 0 10px rgba(255,255,255,.12)}
+  .g .day.show{background:linear-gradient(180deg,#1a1e1d 0%,#000 70%);color:#fff;border-color:rgba(255,255,255,.85);
+    box-shadow:0 0 12px rgba(255,255,255,.3),inset 0 0 10px rgba(255,255,255,.1)}
   .g .day.show .d-ct{color:#fff}
   .g .d-dt{font-family:"Michroma",sans-serif;font-style:oblique 12deg;font-synthesis:style;font-weight:400}
   .g .day svg{filter:drop-shadow(0 0 3px rgba(255,255,255,.4))}
