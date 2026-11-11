@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="color-scheme" content="light dark">
-<meta name="build" content="20261111220801">
+<meta name="build" content="20261111221055">
 <title>明日世界 · 福州站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,9 +160,9 @@
   html.hotel,html.hotel body{height:100%;overflow:hidden;background:transparent}
   html.hotel .grid{display:none}
   html.hotel #hotel{display:flex;flex-direction:column;height:100vh;border-radius:14px;overflow:hidden;background:var(--ink);border:1px solid var(--line)}
-  #hmap{flex:1;min-height:0;background:#2a302e;position:relative;z-index:0}
+  #hmap{flex:1;min-height:0;background:#2a302e url(hotel.jpg) center 40%/cover no-repeat;position:relative;z-index:0}
   #hmap .leaflet-tile-pane{filter:grayscale(1) brightness(.86) contrast(1.08)}
-  #hmap::after{content:"";position:absolute;inset:0;background:rgba(88,115,112,.22);mix-blend-mode:multiply;pointer-events:none;z-index:450}
+  #hmap::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 60%,rgba(11,13,12,.55));pointer-events:none;z-index:450}
   .pin{width:22px;height:22px;border-radius:50% 50% 50% 0;background:#000;transform:rotate(-45deg);border:3px solid var(--green-hi);box-shadow:0 2px 8px rgba(0,0,0,.5)}
   .hinfo{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
   .hname{font-size:17px;font-weight:800;color:#fff;letter-spacing:.02em}
@@ -596,7 +596,7 @@ if(W==='ticket'){
   $('ticket').innerHTML=ticketSVG(TICKETS[idx]);
 }
 // 住宿地图：高德瓦片（GCJ-02），坐标取山亚大厦
-if(W==='hotel'){
+if(W==='hotel-map'){
   const HOTEL=[26.034942,119.318718];
   const css=document.createElement('link'); css.rel='stylesheet'; css.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(css);
   const sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
