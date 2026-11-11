@@ -118,8 +118,8 @@
   #ticket{display:none}
 
   /* 顶部整块：?w=top  左海报 + 右时钟/天气 */
-  html.top,html.top body{height:100%;overflow:hidden;background:transparent}
-  html.top .grid{height:100vh;min-height:0;padding:0;gap:6px;background:transparent;
+  html.top,html.top body{height:100%;overflow:hidden;background:#191919}
+  html.top .grid{height:100vh;min-height:0;padding:0;gap:6px;background:#191919;
     grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
   html.top .q{min-height:0;padding:clamp(8px,2.2vw,16px)}
   html.top [data-w=pass]{display:none}
@@ -146,7 +146,7 @@
   html.top .day svg{width:clamp(14px,3.4vw,26px);height:clamp(14px,3.4vw,26px)}
 
   /* 票根：?w=ticket&p=0|1|2 */
-  html.ticket,html.ticket body{height:100%;overflow:hidden;background:transparent}
+  html.ticket,html.ticket body{height:100%;overflow:hidden;background:#191919}
   html.ticket .grid{display:none}
   html.ticket #ticket{display:flex;height:100vh;align-items:center;justify-content:center}
   html.ticket #ticket svg{width:min(100vw,56.25vh);height:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
